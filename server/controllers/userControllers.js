@@ -78,6 +78,53 @@ class UserControllers {
       }
     });
   };
+
+  edit = (req, res) => {
+
+
+    const {name, lastname, address, user_city, user_id} = JSON.parse(req.body.editUser) 
+    console.log("req.body", req.body.editUser);
+    console.log("req.file", req.file);
+
+   
+    let img = "";
+
+    if(req.file != undefined){
+      img = `, user_img = "${req.file.filename}"`
+    }
+
+    let sql = `UPDATE user SET name = "${name}", lastname = "${lastname}", address = "${address}", user_city = "${user_city}" ${img} WHERE user_id = ${user_id}`
+
+    console.log("sql", sql);
+
+    connection.query(sql, (err, result)=>{
+
+      if(err){
+        res.status(500).json(err)
+      }else{
+        res.status(200).json({result, newImg: req.file?.filename})
+      }
+
+      console.log("RESULT", result);
+
+
+
+
+
+    })
+
+
+
+
+
+
+
+
+
+  }
+
+
+
 }
 
 module.exports = new UserControllers();

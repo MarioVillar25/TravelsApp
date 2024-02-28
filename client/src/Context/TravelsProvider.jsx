@@ -6,21 +6,21 @@ import axios from "axios";
 export const TravelContext = createContext();
 
 export const TravelsProvider = ({ children }) => {
-  const [state, setState] = useState({});
+  const [user, setUser] = useState();
+  const [token, setToken] = useState()
+  console.log("USER", user);
 
   useEffect(() => {
     let tokenlocal = getLocalStorage("token");
-    console.log(tokenlocal);
 
     if (tokenlocal) {
       const { id } = jwtDecode(tokenlocal).user;
-      console.log(id);
 
       axios
         .get(`http://localhost:3000/users/getOneUser/${id}`)
         .then((res) => {
-          console.log("res", res);
-          setState({ ...state, user: res.data });
+          setUser(res.data);
+          setToken(tokenlocal)
         })
         .catch((err) => {
           console.log(err);
@@ -28,9 +28,8 @@ export const TravelsProvider = ({ children }) => {
     }
   }, []);
 
-  console.log("state del context", state);
   return (
-    <TravelContext.Provider value={[state, setState]}>
+    <TravelContext.Provider value={{user, setUser, token, setToken}}>
       {children}
     </TravelContext.Provider>
   );

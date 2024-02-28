@@ -6,6 +6,7 @@ import { NavbarApp } from "../components/NavbarApp/NavbarApp";
 import { Register } from "../pages/Auth/Register/Register";
 import { Login } from "../pages/Auth/Login/Login";
 import { UserProfile } from "../pages/UserProfile/UserProfile";
+import { EditUser } from "../pages/EditUser/EditUser";
 
 export const AppRoutes = () => {
   return (
@@ -20,6 +21,8 @@ export const AppRoutes = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/userProfile" element={<UserProfile />} />
+            <Route path="/editUser" element={<EditUser />} />
+
 
 
           </Routes>

@@ -14,7 +14,7 @@ export const FormLogin = () => {
   const [login, setLogin] = useState(initialValue);
   const [message, setMessage] = useState();
   const navigate = useNavigate();
-  const [state, setState] =  useContext(TravelContext);
+  const {setUser, setToken} =  useContext(TravelContext);
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -33,7 +33,8 @@ export const FormLogin = () => {
           saveLocalStorage("token", res.data.token);
           //decirle a la app quien es el usuario logueado
           //guardar user en un Context
-          setState({...state, user: res.data.user})
+          setUser(res.data.user)
+          setToken(res.data.token)
           navigate("/userProfile");
         })
         .catch((err) => {

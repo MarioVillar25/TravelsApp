@@ -10,20 +10,19 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { TravelContext } from "../../Context/TravelsProvider";
 import { deleteLocalStorage } from "../../utils/localStorageUtils";
+import "./navbar.scss";
 
 export const NavbarApp = () => {
-  const [state, setState] = useContext(TravelContext);
+  const { user, setUser, setToken } = useContext(TravelContext);
   const navigate = useNavigate();
-
-  if (state.user) {
-    console.log("hay user");
-  }
 
   const logOut = () => {
     deleteLocalStorage("token");
-    setState({});
+    setUser();
+    setToken();
     navigate("/");
   };
+
   return (
     <nav>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -47,9 +46,14 @@ export const NavbarApp = () => {
               <Nav.Link as={Link} to="/services">
                 Services
               </Nav.Link>
+              <Nav.Link as={Link} to="/userProfile">
+                Go To Profile
+              </Nav.Link>
+
+
             </Nav>
 
-            {!state.user ? (
+            {!user ? (
               <div className="d-flex gap-2">
                 <Button
                   onClick={() => {
@@ -73,8 +77,27 @@ export const NavbarApp = () => {
                 <Button onClick={logOut} variant="outline-success">
                   LogOut
                 </Button>
+
+                <Button
+                  onClick={() => navigate("/editUser")}
+                  variant="outline-success"
+                >
+                  Edit Profile
+                </Button>
               </div>
             )}
+            <div className="d-flex align-items-center navbarImg">
+              <p className="m-0">{user?.name[0].toUpperCase()}</p>
+
+              {user?.user_img ? (
+                <img onClick={() => navigate("/userProfile")}
+                  src={`http://localhost:3000/images/users/${user?.user_img}`}
+                  alt=""
+                />
+              ) : (
+                <img onClick={() => navigate("/userProfile")} src="/assets/images/user.png" alt="" />
+              )}
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>

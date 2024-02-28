@@ -34,3 +34,7 @@ CREATE TABLE picture (
     CONSTRAINT fk_travel_id FOREIGN KEY (travel_id) REFERENCES travel(travel_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+select * from user;
+select * from travel;
+select * from picture;
+
